@@ -1,4 +1,6 @@
-import 'package:bmi_calculator/result_screen.dart';
+import 'package:bmi_calculator/models/bmi_model/bmi_model.dart';
+import 'package:bmi_calculator/modules/bmi_result/result_screen.dart';
+import 'package:bmi_calculator/shared/components/components.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +35,7 @@ class _HomeScreen extends State {
         backgroundColor: Colors.teal[600],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(sizeBox),
         child: Column(
           children: [
             Expanded(
@@ -46,35 +48,15 @@ class _HomeScreen extends State {
                           isMale = true;
                         });
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: isMale ? Colors.black : Colors.grey,
-                            width: 2.0,
-                          ),
-                          color: isMale ? Colors.lightBlue : Colors.grey[500],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.male,
-                              size: sizeIcon,
-                            ),
-                            Text(
-                              "Male",
-                              style: TextStyle(
-                                fontSize: sizeText,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: selectGender(
+                        icon: Icons.male,
+                        isMale: isMale,
+                        sizeIcon: sizeIcon,
+                        sizeText: sizeText,
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     width: sizeBox,
                   ),
                   Expanded(
@@ -84,38 +66,19 @@ class _HomeScreen extends State {
                           isMale = false;
                         });
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: !isMale ? Colors.lightBlue : Colors.grey[500],
-                          border: Border.all(
-                            color: !isMale ? Colors.black : Colors.grey,
-                            width: 2.0,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.female,
-                              size: sizeIcon,
-                            ),
-                            Text(
-                              "Female",
-                              style: TextStyle(
-                                fontSize: sizeText,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: selectGender(
+                        isMale: !isMale,
+                        icon: Icons.female,
+                        text: "Female",
+                        sizeIcon: sizeIcon,
+                        sizeText: sizeText,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: sizeBox,
             ),
             Expanded(
@@ -157,7 +120,7 @@ class _HomeScreen extends State {
                 ),
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: sizeBox,
             ),
             Expanded(
@@ -203,7 +166,7 @@ class _HomeScreen extends State {
                                   size: sizeIcon2,
                                 ),
                               ),
-                               SizedBox(
+                              SizedBox(
                                 width: sizeBox,
                               ),
                               FloatingActionButton(
@@ -226,7 +189,7 @@ class _HomeScreen extends State {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     width: sizeBox,
                   ),
                   Expanded(
@@ -269,7 +232,7 @@ class _HomeScreen extends State {
                                   size: sizeIcon2,
                                 ),
                               ),
-                               SizedBox(
+                              SizedBox(
                                 width: sizeBox,
                               ),
                               FloatingActionButton(
@@ -295,7 +258,7 @@ class _HomeScreen extends State {
                 ],
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: sizeBox,
             ),
             MaterialButton(
@@ -305,10 +268,12 @@ class _HomeScreen extends State {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ResultScreen(
-                      height: height,
-                      weight: weight,
-                      age: age,
-                      gender: isMale ? "Male" : "Female",
+                      bmiModel: BmiModel(
+                        height: height,
+                        weight: weight,
+                        age: age,
+                        gender: isMale ? "Male" : "Female",
+                      ),
                     ),
                   ),
                 );
